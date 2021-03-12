@@ -1,5 +1,10 @@
 var tasks = {};
 
+var auditTask = function(taskEl) {
+  // to ensure element is getting to the function
+  console.log(taskEl);
+};
+
 var createTask = function(taskText, taskDate, taskList) {
   // create elements that make up a task item
   var taskLi = $("<li>").addClass("list-group-item");
@@ -13,6 +18,8 @@ var createTask = function(taskText, taskDate, taskList) {
   // append span and p element to parent li
   taskLi.append(taskSpan, taskP);
 
+  // check due date
+  auditTask(taskLi);
 
   // append to ul list on the page
   $("#list-" + taskList).append(taskLi);
@@ -46,11 +53,11 @@ var saveTasks = function() {
 };
 
 $(".list-group").on("click", "p", function() {
-  let text = $(this)
+  var text = $(this)
   .text()
   .trim();
 
-  let textInput = $("<textarea>")
+  var textInput = $("<textarea>")
   .addClass("form-control")
   .val(text);
 
@@ -62,17 +69,17 @@ $(".list-group").on("click", "p", function() {
 //textarea is clicked for edit
 $(".list-group").on("blur", "textarea", function() {
   // get the texarea's current value/text
-  let text = $(this)
+  var text = $(this)
     .val()
     .trim();
 
   // get the parents ul's id attribute
-  let status = $(this)
+  var status = $(this)
     .closest(".list-group")
     .attr("id")
     .replace("list-", "");
   
-  let index = $(this)
+  var index = $(this)
     .closest(".list-group-item")
     .index();
 
@@ -80,7 +87,7 @@ $(".list-group").on("blur", "textarea", function() {
   saveTasks();
 
   //recreate p element
-  let taskP = $("<p>")
+  var taskP = $("<p>")
     .addClass("m-1")
     .text(text);
 
@@ -118,18 +125,18 @@ $(".list-group").on("click", "span", function() {
 //value of due date was changed
 $(".list-group").on("change", "input[type='text']", function() {
   //get current text
-  let date = $(this)
+  var date = $(this)
     .val()
     .trim();
 
   //get the parent ul's id attribute
-  let status = $(this)
+  var status = $(this)
     .closest(".list-group")
     .attr("id")
     .replace("list-", "");
 
   //get the tasks position in the list of other li elements
-  let index = $(this)
+  var index = $(this)
     .closest(".list-group-item")
     .index();
 
@@ -138,7 +145,7 @@ $(".list-group").on("change", "input[type='text']", function() {
   saveTasks();
 
   //recreate span element with bootstrap classes
-  let taskSpan = $("<span>")
+  var taskSpan = $("<span>")
     .addClass("badge badge-primary badge-pill")
     .text(date);
 
@@ -213,16 +220,16 @@ $(".card .list-group").sortable({
   },
   update: function(event) {
     //array to store the task data in
-    let tempArr = [];
+    var tempArr = [];
     
     //loop over current set of children in sortable list
     $(this).children().each(function(){
-      let text = $(this)
+      var text = $(this)
         .find("p")
         .text()
         .trim();
 
-      let date = $(this)
+      var date = $(this)
         .find("span")
         .text()
         .trim();
@@ -236,7 +243,7 @@ $(".card .list-group").sortable({
     });
     
     //trim down list's ID to match object property
-    let arrName = $(this)
+    var arrName = $(this)
     .attr("id")
     .replace("list-", "");
 
